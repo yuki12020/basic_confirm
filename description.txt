@@ -1,0 +1,43 @@
+basic認証　かけかた
+
+参考サイト
+http://www.chama.ne.jp/access/
+https://www.yajiuma-soul.com/entry/20160617-1466110800
+
+htpasswdのパスワード暗号化されるっぽいので
+下記サイトで作成
+（１）https://www.htaccesseditor.com/#a_basic
+（２）http://www.luft.co.jp/cgi/htpasswd.php
+例えば、
+root:XY1.dc8h6NBTQ
+#root:adminに対応してる
+
+basic認証かけたいフォルダの中に
+
+.htaccess
+#basic認証
+#neko:testtesttest
+AuthUserfile /var/www/html/.htpasswd
+AuthGroupfile /dev/null
+AuthName "Please enter your ID and password"
+AuthType Basic
+require valid-user
+
+.htpasswd
+root:admin1234
+↓
+root:XY1.dc8h6NBTQ  こっちを記述（暗号化されたもの）
+
+
+アパッチのこれをALLにしてやる事で反映されるっぽい
+httpd.conf
+[None」を「All」に変更することで「.htaccess」が利用可能となる。
+
+# AllowOverride controls what directives may be placed in .htaccess files.
+# It can be "All", "None", or any combination of the keywords:
+# Options FileInfo AuthConfig Limit
+#
+# AllowOverride None
+AllowOverride All
+
+サーバーreboot
